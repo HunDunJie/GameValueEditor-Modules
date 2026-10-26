@@ -27,7 +27,7 @@
 - 正式资产：`GameValueEditor.Module.Deskrawl-v1.0.2.zip`，554345 字节；仅含 DLL 与清单，DLL ProductVersion 为 `1.0.2+351198f993b7ee1660f0011b2872ec3e22c10d26`。
 - SHA-256：`640CEBB8087E81DBA593DBA3398157C96A071AABA17EB464C8A2A535025932EE`。
 - 已推送源码及标签，并完成上传后的独立 `-VerifyOnly`，远端资产大小和 SHA-256 一致。
-- Release 地址：<https://github.com/BestWishes/GameValueEditor-Modules/releases/tag/deskrawl-v1.0.2>。
+- Release 地址：<https://github.com/HunDunJie/GameValueEditor-Modules/releases/tag/deskrawl-v1.0.2>。
 - 全部五个模块及 SDK Release 编译零警告、零错误；共享页面回归 249 项；发布基础设施 20 项、模块包装 14 项、目录属性 8 项、包装构建限制 19 项通过。
 - 宿主 0.5.4 常规冒烟测试（不带模块包参数）通过；独立安装目录验证器实际加载五个正式模块并创建全部 20 个页面，包括 Deskrawl 的六个页面。
 - 带正式模块参数的宿主旧稳定性测试存在两项前提不适用：强制所有 IL2CPP 模块支持未知构建，以及对本地异步诊断签名使用旧反射参数。本次没有放宽 Deskrawl 构建限制或修改另一项宿主工作；模块加载、页面契约和常规宿主冒烟分别验证，未声称该旧组合测试通过。

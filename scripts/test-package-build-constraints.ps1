@@ -39,7 +39,7 @@ $manifestSchema = Get-Content -LiteralPath (Join-Path $root 'schemas/module.sche
 Assert-BuildSchemaTest (Test-Json -Json $manifestJson -Schema $manifestSchema) 'Current local package manifest no longer validates'
 $manifest = $manifestJson | ConvertFrom-Json -AsHashtable
 $entry = @{} + $manifest; $entry.Remove('assemblyFile'); $entry.contributors = @()
-$entry.downloadUrl = 'https://github.com/BestWishes/GameValueEditor-Modules/releases/download/fixture-v0.0.5/Fixture.zip'
+$entry.downloadUrl = 'https://github.com/HunDunJie/GameValueEditor-Modules/releases/download/fixture-v0.0.5/Fixture.zip'
 $entry.sha256 = 'F' * 64; $entry.sizeBytes = 1
 $release = @{}
 foreach ($key in @('version','hostApiVersion','minimumHostVersion','compatibleBuilds','editors','downloadUrl','sha256','sizeBytes')) { $release[$key] = $entry[$key] }

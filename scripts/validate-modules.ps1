@@ -131,7 +131,7 @@ if (-not $SkipCatalog) {
         $releaseSlug = [System.IO.Path]::GetFileNameWithoutExtension([string]$source.assemblyFile) `
             -replace '^GameValueEditor\.Modules\.', ''
         $assetName = "GameValueEditor.Module.$releaseSlug-v$($source.version).zip"
-        $expectedUrl = "https://github.com/BestWishes/GameValueEditor-Modules/releases/download/$($directoriesByModule[$entry.id])-v$($source.version)/$assetName"
+        $expectedUrl = "https://github.com/HunDunJie/GameValueEditor-Modules/releases/download/$($directoriesByModule[$entry.id])-v$($source.version)/$assetName"
         if ($entry.downloadUrl -ne $expectedUrl) {
             throw "Catalog entry $($entry.id) has an unexpected download URL."
         }

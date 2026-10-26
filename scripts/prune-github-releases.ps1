@@ -14,8 +14,8 @@ if (-not (Test-Path -LiteralPath $manifestPath)) { throw "Unknown game module: $
 $manifest = Get-Content -LiteralPath $manifestPath -Raw -Encoding UTF8 | ConvertFrom-Json
 $slug = [IO.Path]::GetFileNameWithoutExtension([string]$manifest.assemblyFile) -replace '^GameValueEditor\.Modules\.', ''
 $remoteUrl = (& git -C $repoRoot remote get-url origin).Trim()
-if ($LASTEXITCODE -ne 0 -or $remoteUrl -notmatch 'github\.com[/:]BestWishes/GameValueEditor-Modules(?:\.git)?$') {
-    throw 'origin is not the expected BestWishes/GameValueEditor-Modules repository.'
+if ($LASTEXITCODE -ne 0 -or $remoteUrl -notmatch 'github\.com[/:]HunDunJie/GameValueEditor-Modules(?:\.git)?$') {
+    throw 'origin is not the expected HunDunJie/GameValueEditor-Modules repository.'
 }
 $credentialLines = "protocol=https`nhost=github.com`n`n" | git credential fill
 if ($LASTEXITCODE -ne 0) { throw 'Unable to read the GitHub credential.' }
@@ -29,14 +29,14 @@ $headers = @{
     'User-Agent' = 'GameValueEditor-module-retention'
 }
 $request = @{ Headers = $headers; Proxy = $ProxyUrl; ErrorAction = 'Stop' }
-$releases = Invoke-RestMethod -Uri 'https://api.github.com/repos/BestWishes/GameValueEditor-Modules/releases?per_page=100' @request
+$releases = Invoke-RestMethod -Uri 'https://api.github.com/repos/HunDunJie/GameValueEditor-Modules/releases?per_page=100' @request
 $plan = Get-ReleaseRetentionPlan -Releases $releases -TagPrefix "$Game-v" -ExpectedAssetName {
     param($version) "GameValueEditor.Module.$slug-v$version.zip"
 }
 foreach ($item in $plan.Delete) {
     $tag = [string]$item.Release.tag_name
     if ($PSCmdlet.ShouldProcess("GitHub Release $tag", 'Delete release and assets; preserve Git tag')) {
-        Invoke-RestMethod -Method Delete -Uri "https://api.github.com/repos/BestWishes/GameValueEditor-Modules/releases/$($item.Release.id)" @request | Out-Null
+        Invoke-RestMethod -Method Delete -Uri "https://api.github.com/repos/HunDunJie/GameValueEditor-Modules/releases/$($item.Release.id)" @request | Out-Null
     }
 }
 [pscustomobject]@{

@@ -157,7 +157,7 @@ if (-not $SkipCatalog) {
     $supportsUnlistedBuildValidation = $manifest.PSObject.Properties.Name -contains 'supportsUnlistedBuildValidation' -and [bool]$manifest.supportsUnlistedBuildValidation
     $entry | Add-Member -NotePropertyName supportsUnlistedBuildValidation -NotePropertyValue $supportsUnlistedBuildValidation -Force
     $entry | Add-Member -NotePropertyName contributors -NotePropertyValue @($contributorsDocument.contributors) -Force
-    $downloadUrl = "https://github.com/BestWishes/GameValueEditor-Modules/releases/download/$Game-v$Version/$archiveName"
+    $downloadUrl = "https://github.com/HunDunJie/GameValueEditor-Modules/releases/download/$Game-v$Version/$archiveName"
     $entry | Add-Member -NotePropertyName downloadUrl -NotePropertyValue $downloadUrl -Force
     $entry | Add-Member -NotePropertyName sizeBytes -NotePropertyValue $sizeBytes -Force
     $entry | Add-Member -NotePropertyName sha256 -NotePropertyValue $hash -Force

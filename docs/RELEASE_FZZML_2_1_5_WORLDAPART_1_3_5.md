@@ -50,8 +50,8 @@
 
 | 正式资产 | 字节 | SHA-256 |
 | --- | ---: | --- |
-| [放置斩魔录 2.1.5](https://github.com/BestWishes/GameValueEditor-Modules/releases/tag/fzzml-v2.1.5) | 539376 | `4005F59C08EA8CCC2632AEE8BCBF4F810D0F3A4A0B62BC76173F803A4AEBF17A` |
-| [不问凡尘 1.3.5](https://github.com/BestWishes/GameValueEditor-Modules/releases/tag/worldapart-v1.3.5) | 536682 | `B8944579510FD1A8F2980ACB0BCF453FAAF531180CD1D05658B8003379787095` |
+| [放置斩魔录 2.1.5](https://github.com/HunDunJie/GameValueEditor-Modules/releases/tag/fzzml-v2.1.5) | 539376 | `4005F59C08EA8CCC2632AEE8BCBF4F810D0F3A4A0B62BC76173F803A4AEBF17A` |
+| [不问凡尘 1.3.5](https://github.com/HunDunJie/GameValueEditor-Modules/releases/tag/worldapart-v1.3.5) | 536682 | `B8944579510FD1A8F2980ACB0BCF453FAAF531180CD1D05658B8003379787095` |
 
 上传通过 `http://127.0.0.1:7897`，没有直连绕过代理、重打包或覆盖旧版本。资产复验之后才运行现有 `Publish-GameModule.ps1 -CatalogOnly` 更新目录，清单/主题、目录属性 8 项及包 Schema 19 项复验通过。新目录保留放置斩魔录 2.1.5/2.1.4/2.1.3、不问凡尘 1.3.5/1.3.4/1.3.3；另两模块目录不变。
 

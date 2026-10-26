@@ -39,7 +39,7 @@ dotnet run --project games/play-again-expedition/tests/ModuleTests/GameValueEdit
 ## 正式产物与线上复验
 
 - 干净源码提交：`d2d9f77022f03caa1076c94873838cf0eb49fde9`；注释标签 `play-again-expedition-v0.1.3` 指向该提交。
-- [0.1.3 Release](https://github.com/BestWishes/GameValueEditor-Modules/releases/tag/play-again-expedition-v0.1.3)：正式 ZIP `GameValueEditor.Module.PlayAgainExpedition-v0.1.3.zip`，227,066 字节。
+- [0.1.3 Release](https://github.com/HunDunJie/GameValueEditor-Modules/releases/tag/play-again-expedition-v0.1.3)：正式 ZIP `GameValueEditor.Module.PlayAgainExpedition-v0.1.3.zip`，227,066 字节。
 - SHA-256：`B9D5E8184AC277A2E40249267E5DC38D749553C235A161A266B1A0D93AD1B9C0`。ZIP 仅含 DLL（966,144 字节）和 module.json（2,249 字节）；API 8、最低主程序 0.5.2、五页和贡献者信息核验通过。
 - 使用 `http://127.0.0.1:7897` 代理上传，独立 `-VerifyOnly` 确认线上大小与摘要一致；正式 ZIP 被当前主程序实际加载，远征五页通过。
 - 上传验证后才更新目录；目录提交 `3b374c4` 已推送。公开 raw 目录完整结构与本地一致，其余三个游戏条目没有变化。

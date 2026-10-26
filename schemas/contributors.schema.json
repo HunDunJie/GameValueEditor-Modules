@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/BestWishes/GameValueEditor-Modules/schemas/contributors.schema.json",
+  "$id": "https://github.com/HunDunJie/GameValueEditor-Modules/schemas/contributors.schema.json",
   "title": "GameValueEditor generated module contributors",
   "type": "object",
   "additionalProperties": false,

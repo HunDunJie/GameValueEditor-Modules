@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/BestWishes/GameValueEditor-Modules/schemas/module.schema.json",
+  "$id": "https://github.com/HunDunJie/GameValueEditor-Modules/schemas/module.schema.json",
   "title": "GameValueEditor module manifest",
   "type": "object",
   "required": ["id", "version", "displayName", "gameDisplayName", "description", "assemblyFile", "hostApiVersion", "minimumHostVersion", "processNames", "compatibleBuilds", "editors"],

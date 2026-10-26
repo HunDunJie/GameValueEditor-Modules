@@ -23,7 +23,7 @@
 
 ## 线上与完整离线交付
 
-- [0.1.2 Release](https://github.com/BestWishes/GameValueEditor-Modules/releases/tag/play-again-expedition-v0.1.2) 已通过代理上传，独立 VerifyOnly 验证远端大小/SHA-256 与本地一致；注释标签指向上述干净源码提交。
+- [0.1.2 Release](https://github.com/HunDunJie/GameValueEditor-Modules/releases/tag/play-again-expedition-v0.1.2) 已通过代理上传，独立 VerifyOnly 验证远端大小/SHA-256 与本地一致；注释标签指向上述干净源码提交。
 - 上传前 main 已有构建证据文档提交；上传后目录提交 `a6ce9b0` 再推进 main，重跑相同发布入口仍成功复用已上传资产。这次真实验证“标签属于 main 历史”的恢复约束，不再要求标签等于最新 main。
 - 公开 raw 目录与本地完整结构相同；远征保留 0.1.2/0.0.7/0.0.6 三版。其余三个游戏目录条目完全不变，也各保留三版，没有删除它们的 Release/资产。
 - `verify-release.ps1 -VerifyReleasedVersions` 全部通过：四模块及 LiveTests Release 编译、目录/Schema/工具回归、完整宿主冒烟、四个原正式 ZIP 共 14 页加载。不重打其它三个不可变版本。

@@ -18,8 +18,8 @@
 
 | 模块与 Release | 大小（字节） | ZIP SHA-256 |
 | --- | --- | --- |
-| [WorldApart 1.3.4](https://github.com/BestWishes/GameValueEditor-Modules/releases/tag/worldapart-v1.3.4) | 48701 | 3A327CD3E76F5FA4988B6552C68A8FDC913A45DDD8504F778B63D0A2CBE06A2A |
-| [Fzzml 2.1.4](https://github.com/BestWishes/GameValueEditor-Modules/releases/tag/fzzml-v2.1.4) | 50749 | 6D4E0F4A1569FEE0B81852A055544319C6A4AAE1242B1CF87FB483F7CB257D63 |
-| [Last Epoch 0.5.5](https://github.com/BestWishes/GameValueEditor-Modules/releases/tag/last-epoch-v0.5.5) | 73761 | 2A5DC65C72BD58D8EEDF3CFE77984B5CEB83A5A15E7C83DDB1A10CB2BC4CD7DE |
+| [WorldApart 1.3.4](https://github.com/HunDunJie/GameValueEditor-Modules/releases/tag/worldapart-v1.3.4) | 48701 | 3A327CD3E76F5FA4988B6552C68A8FDC913A45DDD8504F778B63D0A2CBE06A2A |
+| [Fzzml 2.1.4](https://github.com/HunDunJie/GameValueEditor-Modules/releases/tag/fzzml-v2.1.4) | 50749 | 6D4E0F4A1569FEE0B81852A055544319C6A4AAE1242B1CF87FB483F7CB257D63 |
+| [Last Epoch 0.5.5](https://github.com/HunDunJie/GameValueEditor-Modules/releases/tag/last-epoch-v0.5.5) | 73761 | 2A5DC65C72BD58D8EEDF3CFE77984B5CEB83A5A15E7C83DDB1A10CB2BC4CD7DE |
 
 新目录各保留 3 个版本：WorldApart 1.3.4/1.3.3/1.3.2、Fzzml 2.1.4/2.1.3/2.1.2、Last Epoch 0.5.5/0.5.4/0.5.3。保留的 API 7 快照与上一提交逐项 JSON 对比一致；正式全目录复验 `verify-release.ps1 -VerifyReleasedVersions` 已通过，复用原始 ZIP，不重打包。目录推送及公开读回后才执行保留清理，Git 标签/源码保留。

@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://github.com/BestWishes/GameValueEditor-Modules/schemas/catalog.schema.json",
+  "$id": "https://github.com/HunDunJie/GameValueEditor-Modules/schemas/catalog.schema.json",
   "title": "GameValueEditor public module catalog",
   "type": "object",
   "additionalProperties": false,
@@ -86,7 +86,7 @@
         },
         "downloadUrl": {
           "type": "string",
-          "pattern": "^https://github\\.com/BestWishes/GameValueEditor-Modules/releases/download/[^/]+/[^/]+\\.zip$"
+          "pattern": "^https://github\\.com/HunDunJie/GameValueEditor-Modules/releases/download/[^/]+/[^/]+\\.zip$"
         },
         "sizeBytes": { "type": "integer", "minimum": 1 },
         "sha256": { "$ref": "#/$defs/sha256" }
@@ -136,7 +136,7 @@
         },
         "downloadUrl": {
           "type": "string",
-          "pattern": "^https://github\\.com/BestWishes/GameValueEditor-Modules/releases/download/[^/]+/[^/]+\\.zip$"
+          "pattern": "^https://github\\.com/HunDunJie/GameValueEditor-Modules/releases/download/[^/]+/[^/]+\\.zip$"
         },
         "sizeBytes": { "type": "integer", "minimum": 1 },
         "sha256": { "$ref": "#/$defs/sha256" },

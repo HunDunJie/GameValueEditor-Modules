@@ -4,7 +4,7 @@
 
 ## 正式模块
 
-- [GitHub Release](https://github.com/BestWishes/GameValueEditor-Modules/releases/tag/last-epoch-v0.5.7)
+- [GitHub Release](https://github.com/HunDunJie/GameValueEditor-Modules/releases/tag/last-epoch-v0.5.7)
 - 源码提交：`c00e3262529e29b541986b0fef6cdff6c29449ce`
 - 带注释标签：`last-epoch-v0.5.7`，标签对象 `4cdbad90767061a9c08d80f65e4376d70a56ca31`；包内 DLL 的 ProductVersion 追溯到上述源码提交。
 - 资产：`GameValueEditor.Module.LastEpoch-v0.5.7.zip`，73,707 字节，只含模块 DLL 与包含贡献者元数据的 `module.json`。
