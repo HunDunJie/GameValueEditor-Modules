@@ -15,6 +15,22 @@ internal static class DeskrawlSemanticCode
 
     internal static string Hash(string canonical) => Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(canonical)));
 
+    internal static bool HasDirectTarget(byte[] code, ulong address, int instructionCount, ulong target)
+    {
+        if (instructionCount is < 1 or > 4096) throw new InvalidDataException("语义指令数量无效。");
+        var decoder = Iced.Intel.Decoder.Create(64, new ByteArrayCodeReader(code));
+        decoder.IP = address;
+        for (var index = 0; index < instructionCount; index++)
+        {
+            var instruction = decoder.Decode();
+            if (instruction.IsInvalid) throw new InvalidDataException("语义指令解析失败。");
+            if (instruction.Op0Kind == OpKind.NearBranch64 &&
+                instruction.FlowControl is FlowControl.Call or FlowControl.UnconditionalBranch &&
+                instruction.NearBranchTarget == target) return true;
+        }
+        return false;
+    }
+
     internal static string Canonical(byte[] code, ulong address, int instructionCount, ulong moduleBase, ulong moduleEnd)
     {
         if (instructionCount is < 1 or > 4096) throw new InvalidDataException("语义指令数量无效。");

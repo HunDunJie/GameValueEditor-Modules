@@ -11,7 +11,13 @@
     ],
     "Instructions": 40,
     "Hash": "20F04D176C761296551B0C1189C98878BB66D2D3002685063E3B4BD78311EF11",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 40,
+        "Hash": "2449AC5F11EEB548C38D462ADE50E0AFEECC789CD663EB72929428038CE9356F"
+      }
+    ]
   },
   {
     "Role": "FishingModifiers|ccm",
@@ -55,7 +61,7 @@
     "Role": "gh|dpe",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "gk",
+    "Owner": "go",
     "Static": true,
     "Result": "StatModifier",
     "Parameters": [
@@ -72,7 +78,7 @@
     "Role": "hh|dyl",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hk",
+    "Owner": "hw",
     "Static": true,
     "Result": "System.Boolean",
     "Parameters": [],
@@ -84,7 +90,7 @@
     "Role": "hh|dym",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hk",
+    "Owner": "hw",
     "Static": true,
     "Result": "System.Int32",
     "Parameters": [],
@@ -96,7 +102,7 @@
     "Role": "hh|dyn",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hk",
+    "Owner": "hw",
     "Static": true,
     "Result": "System.Int64",
     "Parameters": [],
@@ -108,19 +114,25 @@
     "Role": "hh|dyp",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hk",
+    "Owner": "hw",
     "Static": true,
     "Result": "System.Int32",
     "Parameters": [],
     "Instructions": 41,
     "Hash": "3790F439C335DF05F58378539F682FA65DA9A6CE240E5025DC853D42A3DA50A0",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 41,
+        "Hash": "171D96576AF18D775578371CF00A4E6F783FE30E7EEE2EA37B7AAF2E495B7AC2"
+      }
+    ]
   },
   {
     "Role": "hh|dyq",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hk",
+    "Owner": "hw",
     "Static": true,
     "Result": "System.Int32",
     "Parameters": [],
@@ -132,7 +144,7 @@
     "Role": "hh|dyr",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hk",
+    "Owner": "hw",
     "Static": true,
     "Result": "System.Int32",
     "Parameters": [],
@@ -144,7 +156,7 @@
     "Role": "hh|dzd",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hk",
+    "Owner": "hw",
     "Static": true,
     "Result": "System.Void",
     "Parameters": [
@@ -182,7 +194,13 @@
     ],
     "Instructions": 244,
     "Hash": "8C6263558F38EE625C48FF93E50C925D8A43469A38829983633DCE5376D532DB",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 244,
+        "Hash": "9AFF3294C8726693F89A37E0E4E87A3104EEB21ADD76A17C22A26E1BE7851FD7"
+      }
+    ]
   },
   {
     "Role": "Inventory|fcp",
@@ -196,7 +214,13 @@
     ],
     "Instructions": 51,
     "Hash": "58B07C1F34FFD9844F509762C9D4DEDBA6AFA3585193EE80033CD46E1E955AE8",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 51,
+        "Hash": "4DD672999A0E780EF6EDC04ABAE49C8C9ADF9BCCE1F11540EED068E512201767"
+      }
+    ]
   },
   {
     "Role": "Inventory|fcs",
@@ -313,7 +337,13 @@
     ],
     "Instructions": 411,
     "Hash": "42F5B802144F1C837E26A4F23B946D311ACE028860F302B7F6E556142EF4A90B",
-    "LegacyHash": "2579D7F855B82D5AB6B5818D3DEB50BC5F6725A5FBB348ED4C62B3D73A345744"
+    "LegacyHash": "2579D7F855B82D5AB6B5818D3DEB50BC5F6725A5FBB348ED4C62B3D73A345744",
+    "ReviewedVariants": [
+      {
+        "Instructions": 411,
+        "Hash": "D4F46A2C1C443FA764A3147D1A064EC82E829A2E707D80BBB04CA28E8E756C28"
+      }
+    ]
   },
   {
     "Role": "Player|fdt",
@@ -342,7 +372,17 @@
     ],
     "Instructions": 131,
     "Hash": "7D3807CBA302A2880600979DF8DFCF9A1A0DC3A49952EC8709F5FC6361319470",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 75,
+        "Hash": "CEA8368ED623DD23712F9EAAB358EF7CFFFFFE98AC6643496E05CB60313ABEA6",
+        "RequiredTargets": [
+          "Player|experience-mobs",
+          "GameConfig|experience-base"
+        ]
+      }
+    ]
   },
   {
     "Role": "Player|fkt",
@@ -447,6 +487,60 @@
     ],
     "Instructions": 49,
     "Hash": "0320326ED6AB828E975DA07C43799DF2E744A60DBD9FB09CD587F637C49377D4",
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 49,
+        "Hash": "79A2F4F25B444AB1DF2070DDB29A550D23C71966A065FD8BC11258BED3429AA4"
+      }
+    ]
+  },
+  {
+    "Role": "Player|experience-mobs",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "Player",
+    "Static": true,
+    "Result": "System.Double",
+    "Parameters": [
+      "GameConfig",
+      "System.Int32"
+    ],
+    "Instructions": 106,
+    "Hash": "7EE57A8899F6AE2D1B34DC286FE68A7D7015952D54C27E91C39EEB8F49769CC6",
+    "LegacyHash": null,
+    "RequiredTargets": [
+      "Player|experience-interpolation"
+    ]
+  },
+  {
+    "Role": "Player|experience-interpolation",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "Player",
+    "Static": true,
+    "Result": "System.Double",
+    "Parameters": [
+      "System.Double",
+      "System.Double",
+      "System.Double"
+    ],
+    "Instructions": 32,
+    "Hash": "27AE88C851E1C8274B0A8FFB13E541BF5A453CE21F8DACB442B5804D19C8701F",
+    "LegacyHash": null
+  },
+  {
+    "Role": "GameConfig|experience-base",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "GameConfig",
+    "Static": false,
+    "Result": "System.Int64",
+    "Parameters": [
+      "System.Int32"
+    ],
+    "Instructions": 47,
+    "Hash": "BA79A042C0346FC7B97FE29212B86D610F87EF392FB041F701CC30C4B42E44A3",
     "LegacyHash": null
   }
 ]

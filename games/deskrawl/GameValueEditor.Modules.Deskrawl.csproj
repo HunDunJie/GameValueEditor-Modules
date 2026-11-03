@@ -9,7 +9,7 @@
     <PlatformTarget>x64</PlatformTarget>
     <AssemblyName>GameValueEditor.Modules.Deskrawl</AssemblyName>
     <RootNamespace>GameValueEditor.Modules.Deskrawl</RootNamespace>
-    <ModuleVersion Condition="'$(ModuleVersion)' == ''">1.0.4</ModuleVersion>
+    <ModuleVersion Condition="'$(ModuleVersion)' == ''">1.0.6</ModuleVersion>
     <Version>$(ModuleVersion)</Version>
   </PropertyGroup>
 

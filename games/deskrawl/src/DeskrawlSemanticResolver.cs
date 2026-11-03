@@ -8,8 +8,10 @@ namespace GameValueEditor.Modules.Deskrawl;
 
 internal sealed class DeskrawlSemanticResolver(Il2CppRuntimeResolver runtime, string path)
 {
+    private sealed record CodeVariant(int Instructions, string Hash, string[]? RequiredTargets = null);
     private sealed record Contract(string Role, string Image, string Namespace, string Owner,
-        bool Static, string Result, string[] Parameters, int Instructions, string Hash, string? LegacyHash);
+        bool Static, string Result, string[] Parameters, int Instructions, string Hash, string? LegacyHash,
+        CodeVariant[]? ReviewedVariants = null, string[]? RequiredTargets = null);
 
     private static readonly IReadOnlyDictionary<string, Contract> Contracts = Load();
     private static readonly ConcurrentDictionary<string, Il2CppRuntimeResolver.NativeMethod> Cache = new();
@@ -30,7 +32,7 @@ internal sealed class DeskrawlSemanticResolver(Il2CppRuntimeResolver runtime, st
             throw new InvalidOperationException($"{key} 不在已分析语义契约中；未执行修改。");
         // File identity plus loaded instance: never reuse across rebuilds or restarts.
         var info = new FileInfo(path);
-        var cacheKey = $"{runtime.InstanceIdentity}|{info.Length}|{info.LastWriteTimeUtc.Ticks}|{key}|{contract.Hash}|{contract.LegacyHash}";
+        var cacheKey = $"{runtime.InstanceIdentity}|{info.Length}|{info.LastWriteTimeUtc.Ticks}|{JsonSerializer.Serialize(contract)}";
         if (Cache.TryGetValue(cacheKey, out var cached)) return cached;
         if (Cache.Count > 512) Cache.Clear();
 
@@ -39,10 +41,27 @@ internal sealed class DeskrawlSemanticResolver(Il2CppRuntimeResolver runtime, st
         bool Matches(Il2CppRuntimeResolver.NativeMethod method)
         {
             var block = pe.GetSectionData(checked((int)(method.Pointer - runtime.ModuleBase)));
-            var bytes = block.GetContent(0, Math.Min(block.Length, contract.Instructions * 15)).ToArray();
-            var hash = DeskrawlSemanticCode.Fingerprint(bytes, method.Pointer, contract.Instructions,
-                runtime.ModuleBase, runtime.ModuleEnd);
-            return hash == contract.Hash || hash == contract.LegacyHash;
+            var variants = new List<CodeVariant> { new(contract.Instructions, contract.Hash, contract.RequiredTargets) };
+            if (contract.LegacyHash is not null) variants.Add(new(contract.Instructions, contract.LegacyHash, contract.RequiredTargets));
+            variants.AddRange(contract.ReviewedVariants ?? []);
+            foreach (var variant in variants)
+            {
+                var bytes = block.GetContent(0, Math.Min(block.Length, variant.Instructions * 15)).ToArray();
+                if (DeskrawlSemanticCode.Fingerprint(bytes, method.Pointer, variant.Instructions,
+                        runtime.ModuleBase, runtime.ModuleEnd) != variant.Hash) continue;
+                // Rewritten XP code delegates part of its formula. Prove those
+                // callees and the actual call/tail-call edges as well as this body.
+                foreach (var targetRole in variant.RequiredTargets ?? [])
+                {
+                    var dependency = Contracts[targetRole];
+                    var parts = targetRole.Split('|');
+                    var target = Method(parts[0], parts[1], dependency.Static, dependency.Result, dependency.Parameters);
+                    if (!DeskrawlSemanticCode.HasDirectTarget(bytes, method.Pointer, variant.Instructions, target.Pointer))
+                        return false;
+                }
+                return true;
+            }
+            return false;
         }
         IReadOnlyList<Il2CppRuntimeResolver.NativeMethod> Candidates(ulong klass) =>
             runtime.MethodsWithSignature(klass, isStatic, result, parameters).Where(Matches).ToArray();

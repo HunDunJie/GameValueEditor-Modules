@@ -281,8 +281,10 @@ public sealed class DeskrawlLiveTest : IModuleLiveTest
         var record = original.GetType();
         var constructor = record.GetConstructors().Single();
         var values = constructor.GetParameters().Select(parameter => record.GetProperty(parameter.Name!)!.GetValue(original)).ToArray();
-        values[^2] = new string('F', 64);
-        values[^1] = null;
+        var parameterNames = constructor.GetParameters().Select(parameter => parameter.Name).ToArray();
+        values[Array.IndexOf(parameterNames, "Hash")] = new string('F', 64);
+        values[Array.IndexOf(parameterNames, "LegacyHash")] = null;
+        values[Array.IndexOf(parameterNames, "ReviewedVariants")] = null;
         try
         {
             contracts["Player|bjy"] = constructor.Invoke(values);

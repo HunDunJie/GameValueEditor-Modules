@@ -1,5 +1,7 @@
 # Deskrawl（桌面破坏神）专属模块
 
+正式版 `1.0.6` 适配游戏 `1.1.0a / Steam Build 26337088`，补全七个失配入口并验证重写后的经验计算调用链。它从干净提交重新构建，延续本地 `1.0.5` 的修复且使用独立版本。适配与验证边界见 [docs/SMALL_UPDATE_1_1_0A.md](docs/SMALL_UPDATE_1_1_0A.md)，发布说明见 [docs/RELEASE_1_0_6.md](docs/RELEASE_1_0_6.md)。
+
 稳定模块 ID：`game.deskrawl`。模块提供六个编辑器：
 
 - `人物属性`：金币、当前经验、可用天赋点、可用巅峰点、基础主属性，以及力量、敏捷、智力、金币发现、物品发现、生命药水发现、材料发现和获得经验值。百分比属性按游戏面板单位显示；天赋与巅峰是两套独立数据。
@@ -40,4 +42,4 @@ dotnet run --project ./tests/GameValueEditor.Modules.LiveTests -c Release -- --g
 dotnet run --project ./tests/GameValueEditor.Modules.LiveTests -c Release -- --game=deskrawl-semantic-code
 ```
 
-`--snapshot-only` 另外验证人物、中文材料、已有可堆叠物品及三种规则读取；名称读取会临时使用并恢复原有主线程派发入口，不是纯兼容诊断。最新证据和边界见 `docs/SMALL_UPDATE_1_0_3.md`。自动识别是所有官方模块的强制开发/验收要求，见仓库 `AGENTS.md` 及扩展指南；不保证任意未来代码或布局变化都兼容。
+`--snapshot-only` 另外验证人物、中文材料、已有可堆叠物品及三种规则读取；名称读取会临时使用并恢复原有主线程派发入口，不是纯兼容诊断。最新证据和边界见 `docs/SMALL_UPDATE_1_1_0A.md`。自动识别是所有官方模块的强制开发/验收要求，见仓库 `AGENTS.md` 及扩展指南；不保证任意未来代码或布局变化都兼容。

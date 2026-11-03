@@ -32,6 +32,18 @@ public sealed class DeskrawlSemanticCodeTest : IModuleLiveTest
             catch (TargetInvocationException error) when (error.InnerException is InvalidOperationException) { rejected = true; }
             LiveTestSupport.Assert(rejected, "Missing/ambiguous semantic candidate was accepted.");
         }
+        var hasTarget = type.GetMethod("HasDirectTarget", BindingFlags.NonPublic | BindingFlags.Static)!;
+        bool HasTarget(byte[] bytes, ulong target) => (bool)hasTarget.Invoke(null, [bytes, module + 0x1000, 2, target])!;
+        byte[] call = [0xE8, 0x10, 0, 0, 0, 0xC3];
+        byte[] retargeted = [0xE8, 0x20, 0, 0, 0, 0xC3];
+        LiveTestSupport.Assert(Hash(call, 0x1000, 2) == Hash(retargeted, 0x1000, 2),
+            "Fixture no longer exercises a relocation-normalized call.");
+        LiveTestSupport.Assert(HasTarget(call, module + 0x1015) && !HasTarget(retargeted, module + 0x1015),
+            "A rewritten dependency edge was accepted merely because the caller hash matched.");
+        LiveTestSupport.Assert(HasTarget([0xE9, 0x10, 0, 0, 0, 0xC3], module + 0x1015),
+            "An analyzed tail-call edge was rejected.");
+        LiveTestSupport.Assert(!HasTarget([0x90, 0xC3], module + 0x1015),
+            "A missing dependency edge was accepted.");
         Console.WriteLine("Semantic code fixtures passed: relocation, constants, branches, members, literal operands, unique/missing/ambiguous candidates. No game access.");
         return Task.CompletedTask;
     }

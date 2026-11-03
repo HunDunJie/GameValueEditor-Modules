@@ -47,6 +47,12 @@
       "version": "1.0.3",
       "evidence": "artifacts/deskrawl/local-review-20261016-r5/GameValueEditor.Module.Deskrawl-v1.0.3.zip",
       "sha256": "EACC44AB078B7B3B568DFFE9D1B1A282EC61142CE4273AE1D9D8DB632A9EA9CE"
+    },
+    {
+      "tagPrefix": "deskrawl-v",
+      "version": "1.0.5",
+      "evidence": "artifacts/deskrawl/local-review-20261103/GameValueEditor.Module.Deskrawl-v1.0.5.zip",
+      "sha256": "EBD9075ABF44336F8E75874164F03277871005A1B2CB542FF83359E1F5850A1A"
     }
   ]
 }
