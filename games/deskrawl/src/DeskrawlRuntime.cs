@@ -145,7 +145,6 @@ internal sealed class DeskrawlRuntime : IDisposable
         _ = Method("PlayerData", "fmg", false, "System.Void", "System.Int32");
         _ = Method("PlayerTalentBook", "fnu", true, "PlayerTalentBook");
         _ = Method("PlayerTalentBook", "fob", false, "System.Int32");
-        _ = Method("PlayerTalentBook", "fot", false, "System.Void", "System.Int32");
         _ = Method("Player", "fkt", false, "System.Void", "System.Int32", "System.Int64");
         _ = Method("Player", "fko", true, "System.Int64", "System.Int32");
         _ = Method("Player", "bjy", false, "System.Double", "StatType");
@@ -167,6 +166,7 @@ internal sealed class DeskrawlRuntime : IDisposable
         var talent = TalentBook;
         if (playerData == 0 || player == 0 || talent == 0)
             throw new InvalidOperationException("人物尚未加载，请进入当前角色后刷新。");
+        _ = ValidateTalentBalance(talent);
         _ = _runtime.Address(playerData, "Gold", ObscuredIntType);
         _ = _runtime.Address(playerData, "Level", ObscuredIntType);
         _ = _runtime.Address(player, "CurrentXP", ObscuredLongType);
@@ -341,7 +341,9 @@ internal sealed class DeskrawlRuntime : IDisposable
 
         var updated = ReadCharacter();
         var actual = updated.Fields.Single(item => string.Equals(item.Key, key, StringComparison.Ordinal)).Value;
-        if (actual != target)
+        // Gold is verified inside its Unity-thread transaction. Later gameplay
+        // rewards may legitimately change the balance before this page refresh.
+        if (key != "gold" && actual != target)
             throw new InvalidOperationException($"{field.DisplayName}写后回读不一致：目标 {target}，实际 {actual}。");
         return updated;
     }
@@ -758,8 +760,15 @@ internal sealed class DeskrawlRuntime : IDisposable
             code.MovRdx(unchecked((ulong)target));
             code.Emit(0x29, 0xC2); // sub edx,eax: game method consumes a delta.
             code.MovRcx(playerData); code.MovR8(0); code.MovRax(addGold.Pointer); code.CallRax();
+            code.Call(ObscuredIntGetter.Pointer, goldAddress, 0, 0, 0);
+            code.Emit(0x3D); code.Emit(BitConverter.GetBytes(target));
+            var rejected = code.NearConditionalJump(0x85);
             code.Call(saveMethod.Pointer, save, 0, 0, 0);
             code.SetInt32(status, 1);
+            var done = code.NearJump();
+            code.Patch(rejected, code.Position);
+            code.SetInt32(status, 5);
+            code.Patch(done, code.Position);
         });
     }
 
@@ -783,17 +792,90 @@ internal sealed class DeskrawlRuntime : IDisposable
     private void WriteTalentPoints(ulong talent, int target)
     {
         var getPoints = Method("PlayerTalentBook", "fob", false, "System.Int32");
-        var addPoints = Method("PlayerTalentBook", "fot", false, "System.Void", "System.Int32");
+        var loadouts = ValidateTalentBalance(talent);
+        var changePoints = loadouts
+            ? Method("PlayerTalentBook", "set-point-balance", false, "System.Void", "System.Int32")
+            : Method("PlayerTalentBook", "fot", false, "System.Void", "System.Int32");
+        var notify = loadouts ? Method("PlayerTalentBook", "increment-point-balance", false, "System.Void") : default;
         var save = SaveSystem;
         var saveMethod = Method("SaveSystem", "egw", false, "System.Void", "System.Boolean");
         ExecuteMainThread((code, status, result) =>
         {
-            code.Call(getPoints.Pointer, talent, 0, 0, 0);
-            code.MovRdx(unchecked((ulong)target)); code.Emit(0x29, 0xC2);
-            code.MovRcx(talent); code.MovR8(0); code.MovRax(addPoints.Pointer); code.CallRax();
+            if (loadouts)
+            {
+                // The reviewed setter has no callbacks. Both calls run together
+                // on Unity's thread: the increment publishes only the final
+                // balance through the game's point-change notification. No
+                // respec, loadout switch or allocated-talent mutation occurs.
+                code.Call(changePoints.Pointer, talent, unchecked((ulong)(target - 1)), 0, 0);
+                code.Call(notify.Pointer, talent, 0, 0, 0);
+            }
+            else
+            {
+                code.Call(getPoints.Pointer, talent, 0, 0, 0);
+                code.MovRdx(unchecked((ulong)target)); code.Emit(0x29, 0xC2);
+                code.MovRcx(talent); code.MovR8(0); code.MovRax(changePoints.Pointer); code.CallRax();
+            }
             code.Call(saveMethod.Pointer, save, 0, 0, 0);
             code.SetInt32(status, 1);
         });
+    }
+
+    private bool ValidateTalentBalance(ulong talent)
+    {
+        try
+        {
+            _ = Method("PlayerTalentBook", "fot", false, "System.Void", "System.Int32");
+            return false; // Retain the fully proven legacy delta-adder path.
+        }
+        catch (InvalidOperationException) { /* New layout requires its own complete proof below. */ }
+
+        _ = Method("PlayerTalentBook", "set-point-balance", false, "System.Void", "System.Int32");
+        _ = Method("PlayerTalentBook", "increment-point-balance", false, "System.Void");
+        _ = Method("PlayerTalentBook", "loadout-items", false,
+            "System.Collections.Generic.Dictionary<TalentData,System.Int32>", "System.Int32");
+        var saveEntry = Method("SaveSystem", "save-loadout-entry", false, "System.Void", "System.Boolean");
+        if (saveEntry.Pointer != Method("SaveSystem", "egw", false, "System.Void", "System.Boolean").Pointer)
+            throw new InvalidDataException("天赋保存入口与游戏保存链不一致，未开放写入。");
+
+        // These offsets are anchored by the complete increment, loadout lookup
+        // and SaveData collector bodies, not by obfuscated field names.
+        var klass = Class("PlayerTalentBook");
+        if (_runtime.ObjectClass(talent) != klass)
+            throw new InvalidDataException("天赋对象类型不一致。");
+        RequireTypedOffset(klass, 0x20, "System.Int32");
+        RequireTypedOffset(klass, 0x28, "System.Collections.Generic.Dictionary<TalentData,System.Int32>[]");
+        RequireTypedOffset(klass, 0x30, "System.Int32");
+        var array = _runtime.ReadPointer(talent + 0x28);
+        var active = _runtime.ReadInt(talent + 0x30);
+        if (array == 0 || _runtime.ReadPointer(array + 0x18) != 3 || active is < 0 or >= 3 ||
+            Enumerable.Range(0, 3).Any(index => _runtime.ReadPointer(array + 0x20 + (ulong)index * 8) == 0))
+            throw new InvalidDataException("三套天赋配置尚未完整加载，未开放写入。");
+        var saveClass = Class("SaveData");
+        foreach (var (name, type, offset) in new[]
+        {
+            ("TalentOutstandingPoints", "System.Int32", 0xA0UL),
+            ("ActiveTalentLoadout", "System.Int32", 0xB0UL),
+            ("TalentLoadouts", "System.Collections.Generic.List<SavedTalentLoadout>", 0xB8UL)
+        })
+            if (_runtime.Field(saveClass, name, type) != offset)
+                throw new InvalidDataException("天赋保存字段布局不匹配，未开放写入。");
+        return true;
+    }
+
+    private void RequireTypedOffset(ulong klass, ulong offset, string type)
+    {
+        using var iterator = _runtime.Allocate(8);
+        for (var index = 0; index < 128; index++)
+        {
+            var field = _runtime.Call(_runtime.Export("il2cpp_class_get_fields"), klass, iterator.Address);
+            if (field == 0) break;
+            if ((_runtime.Call(_runtime.Export("il2cpp_field_get_flags"), field) & 0x10) == 0 &&
+                _runtime.Call(_runtime.Export("il2cpp_field_get_offset"), field) == offset &&
+                Il2CppRuntimeResolver.SameType(_runtime.TypeName(_runtime.Call(
+                    _runtime.Export("il2cpp_field_get_type"), field)), type)) return;
+        }
+        throw new InvalidDataException("天赋结构与已分析的业务/保存路径不一致，未开放写入。");
     }
 
     private void WriteParagonPoints(int target)

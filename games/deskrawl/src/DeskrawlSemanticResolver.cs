@@ -15,6 +15,7 @@ internal sealed class DeskrawlSemanticResolver(Il2CppRuntimeResolver runtime, st
 
     private static readonly IReadOnlyDictionary<string, Contract> Contracts = Load();
     private static readonly ConcurrentDictionary<string, Il2CppRuntimeResolver.NativeMethod> Cache = new();
+    private static readonly ConcurrentDictionary<string, byte> Rejected = new();
     private readonly Dictionary<string, ulong> _owners = new();
 
     private static IReadOnlyDictionary<string, Contract> Load()
@@ -32,9 +33,12 @@ internal sealed class DeskrawlSemanticResolver(Il2CppRuntimeResolver runtime, st
             throw new InvalidOperationException($"{key} 不在已分析语义契约中；未执行修改。");
         // File identity plus loaded instance: never reuse across rebuilds or restarts.
         var info = new FileInfo(path);
-        var cacheKey = $"{runtime.InstanceIdentity}|{info.Length}|{info.LastWriteTimeUtc.Ticks}|{JsonSerializer.Serialize(contract)}";
+        var cacheKey = $"{runtime.InstanceIdentity}|{info.Length}|{info.LastWriteTimeUtc.Ticks}|{ProofIdentity(key, new())}";
         if (Cache.TryGetValue(cacheKey, out var cached)) return cached;
+        if (Rejected.ContainsKey(cacheKey))
+            throw new InvalidOperationException($"{key} 的完整语义候选缺失或不唯一；未执行修改。");
         if (Cache.Count > 512) Cache.Clear();
+        if (Rejected.Count > 512) Rejected.Clear();
 
         using var stream = File.OpenRead(path);
         using var pe = new PEReader(stream);
@@ -55,7 +59,8 @@ internal sealed class DeskrawlSemanticResolver(Il2CppRuntimeResolver runtime, st
                 {
                     var dependency = Contracts[targetRole];
                     var parts = targetRole.Split('|');
-                    var target = Method(parts[0], parts[1], dependency.Static, dependency.Result, dependency.Parameters);
+                    var target = targetRole == key ? method :
+                        Method(parts[0], parts[1], dependency.Static, dependency.Result, dependency.Parameters);
                     if (!DeskrawlSemanticCode.HasDirectTarget(bytes, method.Pointer, variant.Instructions, target.Pointer))
                         return false;
                 }
@@ -64,16 +69,26 @@ internal sealed class DeskrawlSemanticResolver(Il2CppRuntimeResolver runtime, st
             return false;
         }
         IReadOnlyList<Il2CppRuntimeResolver.NativeMethod> Candidates(ulong klass) =>
-            runtime.MethodsWithSignature(klass, isStatic, result, parameters).Where(Matches).ToArray();
+            // IL2CPP may fold multiple metadata aliases in this class onto one
+            // native body. Keep distinct targets (and distinct classes) ambiguous.
+            runtime.MethodsWithSignature(klass, isStatic, result, parameters).Where(Matches)
+                .DistinctBy(method => method.Pointer).ToArray();
+        T UniqueProof<T>(IReadOnlyList<T> candidates)
+        {
+            // Only cache a completed candidate search, never a runtime/IO error.
+            // The key includes this process instance and the entire proof graph.
+            if (candidates.Count != 1) Rejected[cacheKey] = 0;
+            return DeskrawlSemanticCode.Unique(candidates, key);
+        }
 
         var opaque = owner.Length <= 3;
         if (!opaque)
         {
             var klass = runtime.Class(contract.Image, contract.Namespace, contract.Owner);
-            return Cache[cacheKey] = DeskrawlSemanticCode.Unique(Candidates(klass), key);
+            return Cache[cacheKey] = UniqueProof(Candidates(klass));
         }
         if (_owners.TryGetValue(owner, out var selected))
-            return Cache[cacheKey] = DeskrawlSemanticCode.Unique(Candidates(selected), key);
+            return Cache[cacheKey] = UniqueProof(Candidates(selected));
 
         // The observed alias is a fast candidate only. Its full method proof must
         // pass; otherwise search bounded opaque types, never advance a name/ordinal.
@@ -91,8 +106,18 @@ internal sealed class DeskrawlSemanticResolver(Il2CppRuntimeResolver runtime, st
         catch (InvalidOperationException) { /* Missing/changed alias: do not call it. */ }
         var found = runtime.OpaqueClasses(contract.Image)
             .SelectMany(klass => Candidates(klass).Select(method => (klass, method))).ToArray();
-        var unique = DeskrawlSemanticCode.Unique(found, key);
+        var unique = UniqueProof(found);
         _owners[owner] = unique.klass;
         return Cache[cacheKey] = unique.method;
+    }
+
+    private static string ProofIdentity(string role, HashSet<string> visited)
+    {
+        if (!visited.Add(role)) return "";
+        var contract = Contracts[role];
+        var targets = (contract.RequiredTargets ?? []).Concat(
+            (contract.ReviewedVariants ?? []).SelectMany(variant => variant.RequiredTargets ?? []))
+            .Distinct().Order(StringComparer.Ordinal);
+        return JsonSerializer.Serialize(contract) + string.Concat(targets.Select(target => ProofIdentity(target, visited)));
     }
 }

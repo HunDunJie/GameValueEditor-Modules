@@ -55,7 +55,13 @@
     "Parameters": [],
     "Instructions": 8,
     "Hash": "2CA8F3C62E0EBE568275FAA421C8A8AD1B6F8B24B96F105FB521A9D5627B6EA1",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 8,
+        "Hash": "726FADBCBFBE500D4A0179AF66ADB2A9513748528E4ED56816F813173B9DA3FA"
+      }
+    ]
   },
   {
     "Role": "gh|dpe",
@@ -78,7 +84,7 @@
     "Role": "hh|dyl",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hw",
+    "Owner": "ij",
     "Static": true,
     "Result": "System.Boolean",
     "Parameters": [],
@@ -90,7 +96,7 @@
     "Role": "hh|dym",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hw",
+    "Owner": "ij",
     "Static": true,
     "Result": "System.Int32",
     "Parameters": [],
@@ -102,7 +108,7 @@
     "Role": "hh|dyn",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hw",
+    "Owner": "ij",
     "Static": true,
     "Result": "System.Int64",
     "Parameters": [],
@@ -114,7 +120,7 @@
     "Role": "hh|dyp",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hw",
+    "Owner": "ij",
     "Static": true,
     "Result": "System.Int32",
     "Parameters": [],
@@ -132,7 +138,7 @@
     "Role": "hh|dyq",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hw",
+    "Owner": "ij",
     "Static": true,
     "Result": "System.Int32",
     "Parameters": [],
@@ -144,7 +150,7 @@
     "Role": "hh|dyr",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hw",
+    "Owner": "ij",
     "Static": true,
     "Result": "System.Int32",
     "Parameters": [],
@@ -156,7 +162,7 @@
     "Role": "hh|dzd",
     "Image": "Assembly-CSharp.dll",
     "Namespace": "",
-    "Owner": "hw",
+    "Owner": "ij",
     "Static": true,
     "Result": "System.Void",
     "Parameters": [
@@ -166,7 +172,16 @@
     ],
     "Instructions": 90,
     "Hash": "0129673A29DC616FAC25A20A75DAF19DF51E76A7C0DD2C94206B1911F554B8F5",
-    "LegacyHash": "7C857A3E1CD59B7E90A67BBCAF4391B44090FD4915F4DD7401CD67A5610BDC8A"
+    "LegacyHash": "7C857A3E1CD59B7E90A67BBCAF4391B44090FD4915F4DD7401CD67A5610BDC8A",
+    "ReviewedVariants": [
+      {
+        "Instructions": 90,
+        "Hash": "8315AB6D20BF05A4275B0C37FAF8EB80E16F7556B6EADBC145D6ECEFADA28B27",
+        "RequiredTargets": [
+          "hh|paragon-refresh"
+        ]
+      }
+    ]
   },
   {
     "Role": "Inventory|fbq",
@@ -199,6 +214,10 @@
       {
         "Instructions": 244,
         "Hash": "9AFF3294C8726693F89A37E0E4E87A3104EEB21ADD76A17C22A26E1BE7851FD7"
+      },
+      {
+        "Instructions": 244,
+        "Hash": "5839A5B3DB585F096CBD53AEE933D3BCD897B9FC3E319B7030D7FD9CF802893B"
       }
     ]
   },
@@ -219,6 +238,10 @@
       {
         "Instructions": 51,
         "Hash": "4DD672999A0E780EF6EDC04ABAE49C8C9ADF9BCCE1F11540EED068E512201767"
+      },
+      {
+        "Instructions": 51,
+        "Hash": "2345E4837AB7C13722B09A81CAFA7725EF91723D21C6AD53D3FABC263D1A8D95"
       }
     ]
   },
@@ -275,7 +298,19 @@
     "Parameters": [],
     "Instructions": 35,
     "Hash": "AC74068F8D5611A67D7432DB63A5DF57C786987673943830AB0F5C02FA758D14",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 103,
+        "Hash": "58FB0E893C209F3BAFAD7136CCF178E32F750B2E291F5A9C1BF19524ACD80789",
+        "RequiredTargets": [
+          "ItemData|name-special",
+          "ItemData|name-template",
+          "rw|item-name",
+          "ItemData|ceu"
+        ]
+      }
+    ]
   },
   {
     "Role": "LootManager|duh",
@@ -342,6 +377,17 @@
       {
         "Instructions": 411,
         "Hash": "D4F46A2C1C443FA764A3147D1A064EC82E829A2E707D80BBB04CA28E8E756C28"
+      },
+      {
+        "Instructions": 411,
+        "Hash": "B0D1EAC59F54CF7829E6726DFE90E635EFD3D097D1E297F07B89F2A9A3EA17C0",
+        "RequiredTargets": [
+          "Player|stat-primary",
+          "Player|stat-secondary",
+          "Player|stat-modifiers",
+          "Player|stat-multiplier",
+          "Player|stat-conversions"
+        ]
       }
     ]
   },
@@ -358,7 +404,13 @@
     ],
     "Instructions": 102,
     "Hash": "7E791569AF0147826EA990E440B6FC5FE0670CCBC69A4EEAEEADB183E47BA8E6",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 102,
+        "Hash": "C19727AEF6657253E210FD78C211C633C38E3816770CB596E4CFA64559AB93F6"
+      }
+    ]
   },
   {
     "Role": "Player|fko",
@@ -397,7 +449,18 @@
     ],
     "Instructions": 81,
     "Hash": "6647A826A23E8D0E1BFE76256283B0C079A6366E26CB9B251FE35325132D598D",
-    "LegacyHash": "FD62F3A6341E48C051309D41F5D25D8C2ECA4CB4D0B9CFA202FB82FE2324625F"
+    "LegacyHash": "FD62F3A6341E48C051309D41F5D25D8C2ECA4CB4D0B9CFA202FB82FE2324625F",
+    "ReviewedVariants": [
+      {
+        "Instructions": 92,
+        "Hash": "E39CECF040086FFDE84071DAB2007EFF927EF8E50C4FBA619C6659ECEC94055A",
+        "RequiredTargets": [
+          "Player|level-refresh",
+          "PlayerTalentBook|ensure-level-points",
+          "Player|xp-refresh"
+        ]
+      }
+    ]
   },
   {
     "Role": "PlayerData|fmc",
@@ -423,7 +486,13 @@
     ],
     "Instructions": 66,
     "Hash": "0707D3BCC963380859C5BDAE65C97BAC5AF7A749444315AE9E695AE1246F5D56",
-    "LegacyHash": "A7D6C7DED94BE8B256D09B71EA8B6E228041D3B672B38D13F61AB74878AB9F12"
+    "LegacyHash": "A7D6C7DED94BE8B256D09B71EA8B6E228041D3B672B38D13F61AB74878AB9F12",
+    "ReviewedVariants": [
+      {
+        "Instructions": 66,
+        "Hash": "B81F4E8A1A5BA3D2CBB9DF8E2E2F5F136C2E019B6F49548CBD1F78A247FF11C9"
+      }
+    ]
   },
   {
     "Role": "PlayerTalentBook|fnu",
@@ -435,7 +504,13 @@
     "Parameters": [],
     "Instructions": 12,
     "Hash": "BD44A493BA36579834B80838BC220D49D65868A719C6633DEB2F20A6E40ED77D",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 17,
+        "Hash": "7FB8C2C5458BBA3D283B8A7F3ABA707611AE1949E6D9F3A771BEA75F143803BA"
+      }
+    ]
   },
   {
     "Role": "PlayerTalentBook|fob",
@@ -447,7 +522,13 @@
     "Parameters": [],
     "Instructions": 127,
     "Hash": "B054E4E353D27EEB1C149CB38E58198FDAD6EE6E155391094B7E43CFF8716D53",
-    "LegacyHash": null
+    "LegacyHash": null,
+    "ReviewedVariants": [
+      {
+        "Instructions": 2,
+        "Hash": "198F1241D77BFDF9DEDDE0F8547E35C1AB0532DD62E0B5D43412640C046BDE69"
+      }
+    ]
   },
   {
     "Role": "PlayerTalentBook|fot",
@@ -541,6 +622,261 @@
     ],
     "Instructions": 47,
     "Hash": "BA79A042C0346FC7B97FE29212B86D610F87EF392FB041F701CC30C4B42E44A3",
+    "LegacyHash": null
+  },
+  {
+    "Role": "Player|stat-primary",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "Player",
+    "Static": false,
+    "Result": "System.Double",
+    "Parameters": [
+      "StatType"
+    ],
+    "Instructions": 76,
+    "Hash": "6676BE2DE90141C3E2B3AD48A961635A7082F5C89A8B68F93D6C2E87A2C633DD",
+    "LegacyHash": null
+  },
+  {
+    "Role": "Player|stat-secondary",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "Player",
+    "Static": false,
+    "Result": "System.Double",
+    "Parameters": [
+      "StatType"
+    ],
+    "Instructions": 113,
+    "Hash": "EFD2F42E81D9BC23BFFFFCADB4CFF72E1DCAE81550E5BC04E9BBD1A407B5EF63",
+    "LegacyHash": null
+  },
+  {
+    "Role": "Player|stat-modifiers",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "Player",
+    "Static": false,
+    "Result": "System.Double",
+    "Parameters": [
+      "StatType",
+      "ModifierType"
+    ],
+    "Instructions": 418,
+    "Hash": "A1D3235EC9ECC3AF6BB2800C15AF35A9AC8FAC96515EA6B162B013C61B6017DE",
+    "LegacyHash": null
+  },
+  {
+    "Role": "Player|stat-multiplier",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "Player",
+    "Static": false,
+    "Result": "System.Double",
+    "Parameters": [
+      "StatType",
+      "ModifierType"
+    ],
+    "Instructions": 122,
+    "Hash": "BF09D04D99BEBEA8A5CF4D345F9D5917638BDCA42B91FB57B37CA11542E32047",
+    "LegacyHash": null
+  },
+  {
+    "Role": "Player|stat-conversions",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "Player",
+    "Static": false,
+    "Result": "System.Double",
+    "Parameters": [
+      "StatType",
+      "System.Collections.Generic.List<System.ValueTuple<StatType,StatType,System.Double,StatusEffectData>>"
+    ],
+    "Instructions": 175,
+    "Hash": "D159A7C61E408C8800AD1DA779D708A6A2B7C8F5D94EBEFECB972F88E6819FDB",
+    "LegacyHash": null
+  },
+  {
+    "Role": "Player|level-refresh",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "Player",
+    "Static": false,
+    "Result": "System.Void",
+    "Parameters": [],
+    "Instructions": 68,
+    "Hash": "C4C3772D4AA5385FE31A206AE19A3769EE3FBB7533688B1D83EC918F4C647959",
+    "LegacyHash": null
+  },
+  {
+    "Role": "Player|xp-refresh",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "Player",
+    "Static": false,
+    "Result": "System.Void",
+    "Parameters": [],
+    "Instructions": 159,
+    "Hash": "63122420CADE07A1DC0A9440A0E634DA246422C15F9A18594D9A6E3DEB63EB1F",
+    "LegacyHash": null
+  },
+  {
+    "Role": "PlayerTalentBook|ensure-level-points",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "PlayerTalentBook",
+    "Static": false,
+    "Result": "System.Void",
+    "Parameters": [
+      "System.Int32"
+    ],
+    "Instructions": 52,
+    "Hash": "6EB762FBE84A761F5A86397881C8E3290B0255F10ABBBBC2FF50AB2A697736D5",
+    "LegacyHash": null,
+    "RequiredTargets": [
+      "PlayerTalentBook|spent-loadout"
+    ]
+  },
+  {
+    "Role": "PlayerTalentBook|spent-loadout",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "PlayerTalentBook",
+    "Static": false,
+    "Result": "System.Int32",
+    "Parameters": [
+      "System.Int32"
+    ],
+    "Instructions": 137,
+    "Hash": "86BE8D62E9EF8264F0215B41F3AC42BD723D18DFAF8A9BAE9077B8AEF8E961B5",
+    "LegacyHash": null
+  },
+  {
+    "Role": "PlayerTalentBook|set-point-balance",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "PlayerTalentBook",
+    "Static": false,
+    "Result": "System.Void",
+    "Parameters": [
+      "System.Int32"
+    ],
+    "Instructions": 2,
+    "Hash": "71246A25BEEBB1ED8D3FFB437ACE28AD38AFEB3AC216221C3A1FB2E84762951D",
+    "LegacyHash": null
+  },
+  {
+    "Role": "PlayerTalentBook|increment-point-balance",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "PlayerTalentBook",
+    "Static": false,
+    "Result": "System.Void",
+    "Parameters": [],
+    "Instructions": 27,
+    "Hash": "B816FB8AA0B20D98FE42F622784A975B7F1AC74F2CAA58D12FCBB839A46D4536",
+    "LegacyHash": null
+  },
+  {
+    "Role": "PlayerTalentBook|loadout-items",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "PlayerTalentBook",
+    "Static": false,
+    "Result": "System.Collections.Generic.Dictionary<TalentData,System.Int32>",
+    "Parameters": [
+      "System.Int32"
+    ],
+    "Instructions": 39,
+    "Hash": "7FE51E5F93B250ED9AB3E47C8EC543D5F362F8A216EC2741458A82A91CC121E4",
+    "LegacyHash": null
+  },
+  {
+    "Role": "SaveSystem|save-loadout-entry",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "SaveSystem",
+    "Static": false,
+    "Result": "System.Void",
+    "Parameters": [
+      "System.Boolean"
+    ],
+    "Instructions": 49,
+    "Hash": "79A2F4F25B444AB1DF2070DDB29A550D23C71966A065FD8BC11258BED3429AA4",
+    "LegacyHash": null,
+    "RequiredTargets": [
+      "SaveSystem|collect-loadout-save"
+    ]
+  },
+  {
+    "Role": "SaveSystem|collect-loadout-save",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "SaveSystem",
+    "Static": false,
+    "Result": "System.ValueTuple<SaveData,SavedStash>",
+    "Parameters": [],
+    "Instructions": 3840,
+    "Hash": "B70F4E5AD6B34B90851225E05567BB693B440F7561DD2DB098E43CE2FF9E7591",
+    "LegacyHash": null,
+    "RequiredTargets": [
+      "PlayerTalentBook|loadout-items"
+    ]
+  },
+  {
+    "Role": "hh|paragon-refresh",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "ij",
+    "Static": true,
+    "Result": "System.Void",
+    "Parameters": [],
+    "Instructions": 277,
+    "Hash": "C339F6A7E3AD92DD3AD2F63B39D2D2FAB31B1BA30F43C8844C8BF185153CFA9B",
+    "LegacyHash": null
+  },
+  {
+    "Role": "ItemData|name-special",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "ItemData",
+    "Static": false,
+    "Result": "System.Boolean",
+    "Parameters": [],
+    "Instructions": 52,
+    "Hash": "3430B5C1BA217AD6707C281825DA5254E10A44F312B29DB9A883E548051075C7",
+    "LegacyHash": null
+  },
+  {
+    "Role": "ItemData|name-template",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "",
+    "Owner": "ItemData",
+    "Static": false,
+    "Result": "System.String",
+    "Parameters": [
+      "System.String"
+    ],
+    "Instructions": 41,
+    "Hash": "1083B97EEEBE694A9CBB45D66D161DC644E34249C3400861CA505CFD3D567C56",
+    "LegacyHash": null,
+    "RequiredTargets": [
+      "rw|item-name"
+    ]
+  },
+  {
+    "Role": "rw|item-name",
+    "Image": "Assembly-CSharp.dll",
+    "Namespace": "Assets.SimpleLocalization.Scripts",
+    "Owner": "rw",
+    "Static": true,
+    "Result": "System.String",
+    "Parameters": [
+      "System.String"
+    ],
+    "Instructions": 319,
+    "Hash": "27D5528CDA1199C7E8620CAA1328BB4CB8F97D07EA0B66116349F88DCA62DD84",
     "LegacyHash": null
   }
 ]

@@ -80,6 +80,8 @@ public sealed class DeskrawlLiveTest : IModuleLiveTest
         Console.WriteLine(JsonSerializer.Serialize(new { SmallUpdateRuntimeValidation = true, CapabilitiesPassed = 8,
             ChangedFingerprintAccepted = true, MissingFingerprintAccepted = true, StaleProcessRejected = true }));
         VerifyCapabilityIsolation(adapter, process, build);
+        if (args.Contains("--verify-loadout-dependencies", StringComparer.Ordinal))
+            VerifyLoadoutDependencies(adapter, process, build);
         if (args.Contains("--compatibility-only", StringComparer.OrdinalIgnoreCase)) return;
 
         var character = adapter.ReadEditorEntities(process, CharacterEditorId).Single();
@@ -301,5 +303,40 @@ public sealed class DeskrawlLiveTest : IModuleLiveTest
         }
         finally { contracts["Player|bjy"] = original; }
         Console.WriteLine("Capability isolation passed: injected contract fault rejected character entry; materials/fishing and module core remained valid. No game data changed.");
+    }
+
+    private static void VerifyLoadoutDependencies(DeskrawlGameAdapter adapter, GameProcessContext process, GameBuildIdentity build)
+    {
+        var resolver = typeof(DeskrawlGameAdapter).Assembly.GetType("GameValueEditor.Modules.Deskrawl.DeskrawlSemanticResolver", true)!;
+        var contracts = (System.Collections.IDictionary)resolver.GetField("Contracts",
+            System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static)!.GetValue(null)!;
+        foreach (var (role, rejected, retained) in new[]
+        {
+            ("ItemData|name-special", "完整材料定义", "人物属性"),
+            ("SaveSystem|collect-loadout-save", "人物属性", "完整材料定义")
+        })
+        {
+            var original = contracts[role]!;
+            var record = original.GetType();
+            var constructor = record.GetConstructors().Single();
+            var names = constructor.GetParameters().Select(parameter => parameter.Name).ToArray();
+            var values = constructor.GetParameters().Select(parameter => record.GetProperty(parameter.Name!)!.GetValue(original)).ToArray();
+            values[Array.IndexOf(names, "Hash")] = new string('F', 64);
+            values[Array.IndexOf(names, "LegacyHash")] = null;
+            values[Array.IndexOf(names, "ReviewedVariants")] = null;
+            try
+            {
+                // Caller proofs were cached by the successful diagnostics above.
+                // A changed dependency must invalidate those cached proofs too.
+                contracts[role] = constructor.Invoke(values);
+                var diagnostics = adapter.GetCompatibilityDiagnostics(process, build);
+                LiveTestSupport.Assert(diagnostics.Single(d => d.DisplayName == rejected).Status == GameCompatibilityDiagnosticStatus.Warning &&
+                                       diagnostics.Single(d => d.DisplayName == retained).Status == GameCompatibilityDiagnosticStatus.Passed &&
+                                       diagnostics.Single(d => d.DisplayName == "钓鱼").Status == GameCompatibilityDiagnosticStatus.Passed,
+                    "A cached caller bypassed a changed helper/save contract, or disabled an independent capability.");
+            }
+            finally { contracts[role] = original; }
+        }
+        Console.WriteLine("Nested helper/save dependency faults rejected affected capabilities after cache warm-up; independent capabilities retained. No game data changed.");
     }
 }
